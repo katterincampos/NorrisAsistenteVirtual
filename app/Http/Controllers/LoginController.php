@@ -5,36 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
     public function show(){
         return view('auth.login');
     }
-    public function username()
-{
-    return 'username';
-}
 
-    public function login(Request $request){
-        $credentials = $request->only('username', 'password');
+    public function login(LoginRequest $request){
+        $credentials = $request->getCredentials();
     
-        if(Auth::attempt($credentials)){
-            return redirect('home');
+        // Si la autenticación tiene éxito, redirigir al usuario.
+        if (Auth::attempt($credentials)) {
+            return redirect()->intended('home');
         }
-        else {
-            return back()->withErrors('auth.failed');
-        }
+    
+        // Si la autenticación falla, redirigir al usuario de vuelta al formulario de login.
+        return redirect()->back()->withErrors('auth.failed');
     }
-    
-
-    
-    
-    
-    
-
-    
-    
 
 }

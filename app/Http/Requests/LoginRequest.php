@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Facades\Validator;
 class LoginRequest extends FormRequest
 {
     /**
@@ -24,14 +24,32 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_name' => 'required',
+            'username' => 'required',
             'password' => 'required'
         ];
     }
-    
+
     public function getCredentials()
     {
-        return $this->only('user_name', 'password');
+        $username = $this->get('username');
+
+        if($this->isEmail($username)) {
+            return [
+                'email' => $username,
+                'password' => $this->get('password')
+            ];
+        }
+
+        return $this->only('username', 'password');
     }
-    
+
+    public function isEmail($value)
+    {
+        $validator = Validator::make(
+            ['username' => $value],
+            ['username' => 'email']
+        );
+
+        return !$validator->fails();
+    }
 }
