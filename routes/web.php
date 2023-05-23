@@ -3,10 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/Norris', function () {
+    return view('welcome');
+})->name('Norris');
 
 Route::get('/register',[RegisterController::class ,'show'])->name('register');
 
@@ -21,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
         return view('homeNorris');
     })->name('home');
 });
+Route::get('/logout',[LogoutController::class ,'logout']);
 
 Route::get('/app', function () {
     return view('layouts.appweb');

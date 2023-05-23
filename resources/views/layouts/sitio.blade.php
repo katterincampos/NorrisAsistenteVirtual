@@ -39,7 +39,7 @@
 <body>
         <nav class="navbar navbar-expand-lg navbar-dark navbar-custom mb-4">
             <div class="container-fluid">
-                <a class="navbar-brand" href="index.html">Norris</a>
+                <a class="navbar-brand" href="{{ route('Norris') }}">Norris</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -47,7 +47,7 @@
                 <div class="fuentes collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link active"  href="index.html">Inicio</a>
+                            <a class="nav-link active"  href="{{ route('Norris') }}">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="">Asociados</a>
