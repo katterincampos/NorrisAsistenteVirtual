@@ -50,7 +50,7 @@
                             <a class="nav-link active"  href="{{ route('Norris') }}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Asociados</a>
+                            <a class="nav-link" href="{{ route('asociados') }}">Asociados</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Quienes somos</a>
@@ -77,7 +77,7 @@
         </nav>
         <div id="fb-root"></div>
         @yield('content')
-    <footer class="footer text-center">
+    <footer class="footer text-center fixed-bottom">
         <div class="container">
             <p>&copy; 2023 Norris. Todos los derechos reservados.</p>
             <ul class="list-inline">

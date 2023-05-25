@@ -1,9 +1,8 @@
-import Vue from 'vue';
+import { createApp } from 'vue'
 import UsersTable from './components/UsersTable.vue';
 
-const app = new Vue({
-    el: '#app',
+createApp({
     components: {
         UsersTable
     }
-});
+}).mount('#app');
