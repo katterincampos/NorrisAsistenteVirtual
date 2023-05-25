@@ -9,7 +9,7 @@
         <div class="row">
 
             <div class="col col-md-6 contenedor">
-                <form  action="{{ route('login') }}" method="post">
+                <form  action="{{ route('loginAsociados') }}" method="post">
                     @csrf
                     <h1>Crear una cuenta</h1>
                         <input class="mb-2"  name="username" type="text" placeholder="Nombre de usuario" required />
