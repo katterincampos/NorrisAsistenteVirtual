@@ -1,17 +1,22 @@
 <template>
-  <div>
-    <input type="text" v-model="search" placeholder="Buscar usuario">
-    <table>
+  <div class="container text-center">
+    <div class="row">
+           <input class="form-control" type="text" v-model="search" placeholder="Buscar usuario" style="border-radius:12px;">
+
+    <table class=" table" style="  border: 1px solid black;
+  border-collapse: collapse;">
+
       <tr v-for="user in filteredUsers" :key="user.id">
-        <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-</svg></td>
-        <td>{{ user.name }}</td>
-        <td><button @click="viewStats(user)">Ver estadísticas</button></td>
-        <td><button @click="chatWith(user)">Chatear</button></td>
+        <td style="border: 1px solid black;" class="col col-md-2">
+          <img src="../../../public/img/person-circle.svg" alt="">
+        </td>
+        <td style="border: 1px solid black;" class="col col-md-4">   {{ user.name }}</td>
+        <td style="border: 1px solid black;" class="col col-md-3" ><button style="border:none !important;" @click="viewStats(user)"><i class="bi bi-person-circle"></i>  Chatear</button></td>
+        <td style="border: 1px solid black;" class="col col-md-3" ><button style="border:none !important;" @click="chatWith(user)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30" height="30"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M32 32c17.7 0 32 14.3 32 32V400c0 8.8 7.2 16 16 16H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H80c-44.2 0-80-35.8-80-80V64C0 46.3 14.3 32 32 32zM160 224c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32s-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm128-64V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V160c0-17.7 14.3-32 32-32s32 14.3 32 32zm64 32c17.7 0 32 14.3 32 32v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V224c0-17.7 14.3-32 32-32zM480 96V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V96c0-17.7 14.3-32 32-32s32 14.3 32 32z"/></svg> Ver Estadisticas</button></td>
       </tr>
     </table>
+    </div>
+
   </div>
 </template>
 

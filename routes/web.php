@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginAsociatesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,7 +30,10 @@ Route::get('/logout',[LogoutController::class ,'logout']);
 Route::get('/app', function () {return view('layouts.appweb');});
 
 Route::get('/asociados', function () {return view('asociados');})->name('asociados');
-Route::get('/loginAsociados', function () {return view('loginAsociados');})->name('loginAsociados');
+
+Route::get('/loginAsociados',[LoginAsociatesController::class ,'show'])->name('loginAsociados');
+
+Route::post('/loginAsociados',[LoginAsociatesController::class ,'login']);
 
 Route::get('/users', function () {
     return view('listadoPac');

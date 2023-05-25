@@ -47,7 +47,7 @@
           </div>
   
         </div>
-  
+        
         <div style="background-color: #fff; box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1); " class="d-style bgc-white btn btn-brc-tp btn-outline-green btn-h-outline-green btn-a-outline-green w-100 my-2 py-3 shadow-sm border-2">
           <!-- Pro Plan -->
           <div class="row align-items-center">
