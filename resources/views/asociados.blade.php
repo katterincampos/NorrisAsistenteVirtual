@@ -18,25 +18,12 @@
             </div>
   
             <ul class="list-unstyled mb-0 col-12 col-md-4 text-dark-l1 text-90 text-left my-4 my-md-0">
-              <li>
-                <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
-                <span>
-                  <span class="text-110">Donec id elit.</span>
-                Fusce dapibus...
-                </span>
-              </li>
+
   
               <li class="mt-25">
                 <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
                 <span class="text-110">
-                  Placerat duis
-              </span>
-              </li>
-  
-              <li class="mt-25">
-                <i class="fa fa-times text-danger-m3 text-110 mr-25 mt-1"></i>
-                <span class="text-110">
-                  Tortor mauris
+                  Acceso a 5
               </span>
               </li>
             </ul>
@@ -71,22 +58,8 @@
               <li>
                 <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
                 <span>
-                  <span class="text-110">Everything in Basic...</span>
+                  <span class="text-110">Acceso a 10 usuarios</span>
                 </span>
-              </li>
-  
-              <li class="mt-25">
-                <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
-                <span class="text-110">
-                  Non diam phasellus
-              </span>
-              </li>
-  
-              <li class="mt-25">
-                <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
-                <span class="text-110">
-                  Tortor mauris
-              </span>
               </li>
             </ul>
   

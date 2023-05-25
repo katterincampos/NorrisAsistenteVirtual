@@ -31,4 +31,21 @@ class RegisterRequest extends FormRequest
             'password_confirmation'=>'required|min:8|same:password'
         ];
     }
+
+    public function messages()
+{
+    return [
+        'name.required' => 'El campo nombre es obligatorio.',
+        'email.required' => 'El campo correo electrónico es obligatorio.',
+        'email.unique' => 'Este correo electrónico ya está registrado.',
+        'username.required' => 'El campo nombre de usuario es obligatorio.',
+        'username.unique' => 'Este nombre de usuario ya está en uso.',
+        'password.required' => 'El campo contraseña es obligatorio.',
+        'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+        'password_confirmation.required' => 'La confirmación de la contraseña es obligatoria.',
+        'password_confirmation.min' => 'La confirmación de la contraseña debe tener al menos 8 caracteres.',
+        'password_confirmation.same' => 'La contraseña y la confirmación de la contraseña deben coincidir.',
+    ];
+}
+
 }

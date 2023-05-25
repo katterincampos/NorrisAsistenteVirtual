@@ -13,6 +13,11 @@
                 <form  action="{{ route('login') }}" method="post">
                     @csrf
                     <h1>Crear una cuenta</h1>
+                    @if ($errors->has('login_error'))
+        <div class="alert alert-danger">
+            {{ $errors->first('login_error') }}
+        </div>
+    @endif
                         <input class="mb-2"  name="username" type="text" placeholder="Nombre de usuario" required />
                         <input class="mb-2"  name="password" type="password" placeholder="Contraseña" required />
                         <a href="">Olvidastes tu contraseña?</a>
@@ -22,7 +27,7 @@
                           <button id="" class="btn btn-dark mt-2" type="button"><i class="fa-brands fa-microsoft fa-lg"></i></button>
                         </div>
 
-                        <button class="btn btn-primary mt-2" type="submit">inicia Sesion</button>
+                        <button class="btn btn-primary mt-2" type="submit">Inicia Sesion</button>
                   </form>
             </div>
             <div class="col col-md-6 panel ">
@@ -30,7 +35,7 @@
                         
                         Crearla  dando click en el boton Registrate que esta aqui abajo
                     </h2>
-                    <button class="btn btn-primary mt-2 fs-4 " type="submit">Registrate</button>
+                    <a class="btn btn-primary mt-2 fs-4 " href="{{ route('register') }}">Registrate</a>
             </div>
         </div>
 </div>

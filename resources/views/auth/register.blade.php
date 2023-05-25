@@ -13,7 +13,15 @@
                 <form  action="{{ route('register') }}" method="post">
                     @csrf
                     <h1>Crear una cuenta</h1>
-
+                    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
                         <input class="mb-2"  name="name" type="text" placeholder="Nombre de usuario" required />
                         <input class="mb-2"  name="email" type="email" placeholder="Correo electronico" required />
                         <input class="mb-2"  name="username" type="text" placeholder="Nombre de usuario" required />
@@ -27,7 +35,7 @@
                         
                         Puedes acceder a ella dando click en el boton inicia sesion que esta aqui abajo
                     </h2>
-                    <button class="btn btn-primary mt-2 fs-4 " type="submit">Inicia sesion</button>
+                    <a class="btn btn-primary mt-2 fs-4 " href="{{ route('login') }}">Inicia sesion</a>
             </div>
         </div>
 </div>
