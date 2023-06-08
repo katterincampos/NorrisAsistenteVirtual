@@ -63,3 +63,4 @@ Route::get('/chat',function(){
     return view ('chat');
 });
 
+Route::get('/chat', [ChatController::class,'index'])->middleware('auth');
