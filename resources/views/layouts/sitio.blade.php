@@ -84,7 +84,7 @@
 
     <div id="fb-root"></div>
     @yield('content')
-    <footer class="footer text-center fixed-bottom">
+    <footer class="footer text-center fixed-bottom mt-5">
         <div class="container">
             <p>&copy; 2023 Norris. Todos los derechos reservados.</p>
             <ul class="list-inline">

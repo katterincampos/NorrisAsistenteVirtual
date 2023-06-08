@@ -1,8 +1,9 @@
 body {
-	font-family: 'Roboto', sans-serif;
-	font-size: 16px;
-	line-height: 1.4;
-	background-color: #e5e7e9;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+    background-color: #e5e7e9;
+    padding-bottom: 60px; /* Altura de tu footer */
 }
 
 .navbar-custom {
@@ -197,4 +198,44 @@ img.img-fluid {
 
 .deleted-text{
 text-decoration:line-through;;    
+}
+
+body.background {
+    background-color: black;
+}
+
+.panelazul {
+    background-color: #1A2B4C;
+    color: white;
+}
+
+.panelblanco {
+    background-color: #FFFFFF;
+    border: 2px solid #000000;
+}
+
+.payment-method {
+    color: black;
+}
+
+.compra {
+    color: white;
+}
+
+.paypal {
+    background-color: #1A2B4C;
+    color: white;
+}
+
+.labelpaypal {
+    color: white;
+}
+
+.linea-negra {
+    border-top: 1px solid black;
+}
+.fondo{
+	width: 100%;
+	height: 40vh;
+	background-color: black;;
 }

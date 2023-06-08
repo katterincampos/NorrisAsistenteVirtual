@@ -21,3 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/users', function () {
     return App\Models\User::take(10)->get();
 });
+
+Route::get('/messages', [ChatController::class, 'fetchMessages']);
+Route::post('/messages', [ChatController::class, 'sendMessage']);

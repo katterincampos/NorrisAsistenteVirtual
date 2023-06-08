@@ -12,6 +12,11 @@
                 <form  action="{{ route('loginAsociados') }}" method="post">
                     @csrf
                     <h1>Crear una cuenta</h1>
+                    @if($errors->has('login_error'))
+    <div class="alert alert-danger">
+        {{ $errors->first('login_error') }}
+    </div>
+@endif
                         <input class="mb-2"  name="username" type="text" placeholder="Nombre de usuario" required />
                         <input class="mb-2"  name="password" type="password" placeholder="Contraseña" required />
                         <a href="">Olvidastes tu contraseña?</a>
