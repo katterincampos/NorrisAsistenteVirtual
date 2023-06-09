@@ -19,7 +19,32 @@ async function conectarBD(){
     return client.db(dbname);
 }
 
+// Middleware de autenticación
+async function authMiddleware(socket, next) {
+    const token = socket.handshake.auth.token;
+    if (!token) {
+        return next(new Error('Authentication error'));
+    }
+
+    // Aquí puedes verificar el token con tu método de autenticación
+    // Por ejemplo, puedes buscar el token en tu base de datos y verificar si el usuario existe
+    let db = await conectarBD(),
+        collection = db.collection('users'),
+        user = await collection.findOne({ token: token });
+
+    if (!user) {
+        return next(new Error('Authentication error'));
+    }
+
+    // Si la autenticación es exitosa, puedes almacenar el usuario en el socket para su uso posterior
+    socket.user = user;
+
+    next();
+}
+
 server.use(express.json());
+
+io.use(authMiddleware);
 
 io.on('connect', socket => {
   console.log('server conectado...');
@@ -29,24 +54,7 @@ io.on('connect', socket => {
     socket.join('chat_' + userId + '_' + chatId);
   });
 
-  socket.on('chat', async chat => {
-    let db = await conectarBD(),
-        collection = db.collection('chat');
-    collection.insertOne(chat);
-
-    // Emitimos el mensaje solo a los usuarios involucrados en el chat
-    io.to('chat_' + chat.from + '_' + chat.to).emit('chat', chat);
-    io.to('chat_' + chat.to + '_' + chat.from).emit('chat', chat);
-  });
-
-  socket.on('historial', async ({ userId, chatId }) => {
-    let db = await conectarBD(),
-        collection = db.collection('chat'),
-        chat = await collection.find({ chatId: chatId }).toArray();
-    console.log('Recuperando historial para chatId:', chatId); // Añade esta línea
-    console.log('Mensajes recuperados:', chat); // Añade esta línea
-    socket.emit('historial', chat); //solo a mi... 
-  });
+  // Resto del código...
 });
 
 http.listen(port, ()=>{
