@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,5 +23,4 @@ Route::get('/users', function () {
     return App\Models\User::take(10)->get();
 });
 
-Route::get('/messages', [ChatController::class, 'fetchMessages']);
-Route::post('/messages', [ChatController::class, 'sendMessage']);
+

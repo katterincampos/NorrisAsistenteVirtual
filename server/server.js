@@ -1,51 +1,54 @@
-const express = require('express');
-const cors = require('cors');
-const http = require('http');
-const socketIo = require('socket.io');
-const mongoose = require('mongoose');
+const express = require('express'),
+    server = express(),
+    http = require('http').Server(server),
+    io = require('socket.io')(http, {
+        allowEIO3:true,
+        cors:{
+            origin: ['http://127.0.0.1:8000', 'http://localhost:8000'],
+            credentials:true,
+        }
+    }),
+    { MongoClient } = require('mongodb'),
+    url = 'mongodb://127.0.0.1:27017/',
+    dbname = 'norrisDB',
+    client = new MongoClient(url),
+    port = 3000;
 
-// Conexión a MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/norrisDB', { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Conexión a MongoDB exitosa'))
-  .catch(err => console.error('No se pudo conectar a MongoDB', err));
+async function conectarBD(){
+    await client.connect();
+    return client.db(dbname);
+}
 
-// Modelo de mensaje para MongoDB
-const Message = mongoose.model('Message', new mongoose.Schema({
-  user: String,
-  text: String,
-}));
+server.use(express.json());
 
-const app = express();
-const server = http.createServer(app);
-const io = socketIo(server, {
-    cors: {
-      origin: "*", // Permitir todas las solicitudes CORS
-      methods: ["GET", "POST"], // Permitir métodos GET y POST
-    },
-  });
-app.use(cors());
-io.on('connection', (socket) => {
-  console.log('Un usuario se ha conectado');
+io.on('connect', socket => {
+  console.log('server conectado...');
 
-  // Enviar los mensajes existentes al cliente
-  Message.find().then(messages => {
-    socket.emit('messages', messages);
+  // Cuando un usuario se conecta, lo agregamos a la sala de su chat
+  socket.on('userConnected', ({ userId, chatId }) => {
+    socket.join('chat_' + userId + '_' + chatId);
   });
 
-  // Escuchar nuevos mensajes del cliente
-  socket.on('newMessage', (message) => {
-    // Guardar el mensaje en la base de datos
-    const messageDoc = new Message(message);
-    messageDoc.save().then(() => {
-      // Enviar el mensaje a todos los clientes
-      io.emit('newMessage', message);
-    });
+  socket.on('chat', async chat => {
+    let db = await conectarBD(),
+        collection = db.collection('chat');
+    collection.insertOne(chat);
+
+    // Emitimos el mensaje solo a los usuarios involucrados en el chat
+    io.to('chat_' + chat.from + '_' + chat.to).emit('chat', chat);
+    io.to('chat_' + chat.to + '_' + chat.from).emit('chat', chat);
   });
 
-  socket.on('disconnect', () => {
-    console.log('Un usuario se ha desconectado');
+  socket.on('historial', async ({ userId, chatId }) => {
+    let db = await conectarBD(),
+        collection = db.collection('chat'),
+        chat = await collection.find({ chatId: chatId }).toArray();
+    console.log('Recuperando historial para chatId:', chatId); // Añade esta línea
+    console.log('Mensajes recuperados:', chat); // Añade esta línea
+    socket.emit('historial', chat); //solo a mi... 
   });
 });
 
-const port = process.env.PORT || 3000;
-server.listen(port, () => console.log(`Servidor escuchando en el puerto ${port}`));
+http.listen(port, ()=>{
+    console.log('Server corriendo en el puerto ', port);
+});
