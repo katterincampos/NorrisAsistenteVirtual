@@ -20,7 +20,7 @@ class PaymentController extends Controller
             'last_name' => $request->input('last_name'),
             'email' => $request->input('email'),
             'username' => $request->input('username'),
-            'password' => bcrypt($request->input('password')),
+            'password' => $request->input('password'),
             'address' => $request->input('address'),
             'city' => $request->input('city'),
             'zip_code' => $request->input('zip_code'),

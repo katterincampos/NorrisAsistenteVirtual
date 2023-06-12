@@ -50,7 +50,7 @@
                     <a class="nav-link active" href="{{ route('Norris') }}">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('asociados') }}">Asociados</a>
+                    <a class="nav-link" href="/chatp">Chat</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Quienes somos</a>

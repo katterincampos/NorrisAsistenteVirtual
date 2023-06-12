@@ -18,17 +18,24 @@ class LoginAsociatesController extends Controller
 
     public function login(LoginAsociatesRequest $request){
         $credentials = $request->getCredentials();
+        
+        // If the authentication is successful, then redirect the user.
+        // Also use the new guard here
+        if (Auth::guard('web_asociates')->validate($credentials)) {
+            $user = Auth::guard('web_asociates')->getLastAttempted();
+            Auth::guard('web_asociates')->login($user, $request->has('remember'));
     
-        // Si la autenticación tiene éxito, redirigir al usuario.
-        // Aquí también debes usar el nuevo guard
-        if (Auth::guard('web_asociates')->attempt($credentials)) {
+            // Save the user ID to the session    
             return redirect()->intended('users');
         }
-    
-        // Si la autenticación falla, redirigir al usuario de vuelta al formulario de login con el error real.
+        
+        // If the authentication fails, then redirect the user back to the login form with the actual error.
         return redirect()->back()->withInput($request->only('username'))->withErrors([
             'login_error' => 'Estas credenciales no coinciden con nuestros registros.'
         ]);
     }
+    
+    
+    
 
 }

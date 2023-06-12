@@ -14,38 +14,15 @@ const express = require('express'),
     client = new MongoClient(url),
     port = 3000;
 
+// Función para conectar a la base de datos
 async function conectarBD(){
     await client.connect();
     return client.db(dbname);
 }
 
-// Middleware de autenticación
-async function authMiddleware(socket, next) {
-    const token = socket.handshake.auth.token;
-    if (!token) {
-        return next(new Error('Authentication error'));
-    }
-
-    // Aquí puedes verificar el token con tu método de autenticación
-    // Por ejemplo, puedes buscar el token en tu base de datos y verificar si el usuario existe
-    let db = await conectarBD(),
-        collection = db.collection('users'),
-        user = await collection.findOne({ token: token });
-
-    if (!user) {
-        return next(new Error('Authentication error'));
-    }
-
-    // Si la autenticación es exitosa, puedes almacenar el usuario en el socket para su uso posterior
-    socket.user = user;
-
-    next();
-}
-
 server.use(express.json());
 
-io.use(authMiddleware);
-
+// Cuando un cliente se conecta al servidor
 io.on('connect', socket => {
   console.log('server conectado...');
 
@@ -54,7 +31,41 @@ io.on('connect', socket => {
     socket.join('chat_' + userId + '_' + chatId);
   });
 
-  // Resto del código...
+  // Cuando recibimos un mensaje de chat de un cliente
+  socket.on('chat', async chat => {
+    let db = await conectarBD(),
+        collection = db.collection('chat');
+    chat.status = 'enviado'; // Marcamos el mensaje como enviado
+    collection.insertOne(chat);
+
+    // Emitimos el mensaje solo a los usuarios involucrados en el chat
+    io.to('chat_' + chat.from + '_' + chat.to).emit('chat', chat);
+    io.to('chat_' + chat.to + '_' + chat.from).emit('chat', chat);
+  });
+
+  // Cuando recibimos una solicitud de historial de chat de un cliente
+  socket.on('historial', async ({ userId, chatId }) => {
+    let db = await conectarBD(),
+        collection = db.collection('chat'),
+        chat = await collection.find({ chatId: chatId }).toArray();
+    socket.emit('historial', chat); // Enviamos el historial al cliente que lo solicitó
+  });
+
+  // Cuando recibimos una confirmación de que un mensaje ha sido recibido por un cliente
+  socket.on('messageReceived', async ({ messageId }) => {
+    let db = await conectarBD(),
+        collection = db.collection('chat');
+    // Actualizamos el estado del mensaje en la base de datos
+    await collection.updateOne({ _id: messageId }, { $set: { status: 'recibido' } });
+  });
+
+  // Cuando recibimos una confirmación de que un mensaje ha sido leído por un cliente
+  socket.on('messageRead', async ({ messageId }) => {
+    let db = await conectarBD(),
+        collection = db.collection('chat');
+    // Actualizamos el estado del mensaje en la base de datos
+    await collection.updateOne({ _id: messageId }, { $set: { status: 'leido' } });
+  });
 });
 
 http.listen(port, ()=>{

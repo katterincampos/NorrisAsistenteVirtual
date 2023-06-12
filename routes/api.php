@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\DoctorPatientController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,8 +19,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/users', function () {
-    return App\Models\User::take(10)->get();
-});
+Route::get('/doctors/{doctorId}/patients', [UserController::class, 'getPatients']);
+Route::get('/patients/{patientId}/doctors', [UserController::class, 'getDoctors']);
 
 
+Route::get('/session/userId', [SessionController::class, 'getUserId']);
+
+
+Route::get('/session/doctorId', [SessionController::class, 'getDoctorId']);
+
+
+Route::get('/assignedDoctor/{patientId}', [DoctorPatientController::class, 'getAssignedDoctor']);
+
+Route::get('/chats', [ChatController::class, 'getChatHistory']);

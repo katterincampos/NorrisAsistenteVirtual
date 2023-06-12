@@ -62,3 +62,7 @@ Route::prefix('paypal')->group(function () {
 Route::get('/chat',function(){
     return view ('chat');
 });
+
+Route::get('/chatp',function(){
+    return view ('chatPacientes');
+});

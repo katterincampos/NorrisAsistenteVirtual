@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use App\Models\UserAsociates;
 class RegisterController extends Controller
 {
 
@@ -15,6 +17,18 @@ class RegisterController extends Controller
     
     public function register(RegisterRequest $request){
         $user = User::create($request->validated());
+    
+        // Asignar el paciente a un médico
+        $doctor = UserAsociates::inRandomOrder()->first();
+        if ($doctor) {
+            DB::table('doctor_patient')->insert([
+                'doctor_id' => $doctor->id,
+                'doctorName' => $doctor->name, // Asegúrate de que 'name' es el nombre correcto del campo
+                'patient_id' => $user->id,
+                'patientName' => $user->name // Asegúrate de que 'name' es el nombre correcto del campo
+            ]);
+        }
+    
         return redirect('/login')->with('success',"Cuenta creada correctamente");
     }
 }
