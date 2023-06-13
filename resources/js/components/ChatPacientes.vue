@@ -1,6 +1,7 @@
 <template>
   <div id="appPaciente" class="container m-0">
     <div class="row">
+
       <div class="col col-12">
         <div class="chat-container">
           <div class="chat-header fondo1 text-white p-3 d-flex justify-content-between align-items-center ">
@@ -8,22 +9,66 @@
               <img src="../../../public/img/person-circle.svg" alt="">
                {{userName}}
             </div>
-            <div>
-              <button class="btn fondo1 text-white btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z"/>
-</svg> </button>
-            </div>
+
           </div>
+                 <div id="cameraModal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Camera</h5>
+            <button type="button" class="btn-close" @click="closeCameraModal"></button>
+          </div>
+  <div class="modal-body">
+    <video id="video" width="500" height="500" autoplay></video>
+    <canvas id="canvas" style="display: none;"></canvas> <!-- Agrega esta línea -->
+  </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" @click="takePhoto">Take Photo</button>
+            <button type="button" class="btn btn-secondary" @click="closeCameraModal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div id="imageModal" class="modal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <img :src="selectedImage" style="width: 100%; height: auto;">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" @click="closeImageModal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="documentModal" class="modal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <iframe id="modalDocument" style="width: 100%; height: 500px;"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" @click="closeDocModal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
           <div class="chat-messages p-3">
 <ul id="ltsMensajes" class="list-unstyled">
   <li v-for="msg in messages" :key="msg._id" :class="{'chat-message-emisor': msg.from === userId, 'chat-message-receptor': msg.from !== userId}">
     <div class="chat-bubble p-2 mb-1">
       <span class="chat-user font-weight-bold"></span>
       <span v-if="isMediaUrl(msg.message)">
-        <audio controls v-if="msg.message.startsWith('data:audio')" :src="msg.message"></audio>
-        <img v-else-if="msg.message.startsWith('data:image')" :src="msg.message" alt="Uploaded file">
-        <iframe v-else-if="msg.message.startsWith('data:application/pdf')" :src="msg.message" style="width: 100%; height: 500px;"></iframe>
-      </span>
+        <audio controls v-if="msg.message.startsWith('data:audio')" :src="msg.message"></audio> 
+        <img v-else-if="msg.message.startsWith('data:image')" :src="msg.message" alt="Uploaded file" @click="openImageModal(msg.message)">
+<div v-if="msg.message.startsWith('data:application/pdf')">
+  <iframe :src="msg.message" style="width: 100%; height: 500px;"></iframe>
+  <button class="btn" @click="openDocModal(msg.message)">Ver</button>
+</div>
+</span>
       <span v-else>
         {{ msg.message }}
       </span>
@@ -52,7 +97,7 @@
 <button type="button" class="btn " @click="showEmojiPicker">  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-emoji-smile-fill" viewBox="0 0 16 16">
   <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zM4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8z"/>
 </svg></button>
-  <button type="button" class="btn "><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-camera-fill" viewBox="0 0 16 16">
+  <button type="button" class="btn" @click="openCameraModal"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-camera-fill" viewBox="0 0 16 16">
   <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
   <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
 </svg></button>
@@ -62,11 +107,17 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
 
 <style scoped>
+.chat-messages img {
+  max-width: 200px;
+  height: auto;
+}
+
 .container {
   max-width: 100%;
 }
@@ -199,6 +250,8 @@ export default {
   },  
   data() {
     return {
+          isImageModalOpen: false,
+    selectedImage: null,
       isRecording: false,
       mediaRecorder: null,
       recordedBlobs: [],
@@ -221,8 +274,6 @@ export default {
     };
   },
   created() {
-
-
     this.getAssignedDoctorId().then(() => {
       this.chatId = 'chat_' + this.doctor_Id + '_' + this.userId;
       this.newMessage.from = this.userId;
@@ -255,26 +306,69 @@ export default {
     });
   },
   methods: {
-  startCamera() {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then((stream) => {
-        const video = document.getElementById('video');
-        video.srcObject = stream;
-        video.play();
-      })
-      .catch((err) => {
-        console.error("Error accessing the camera", err);
-      });
+openDocModal(documentSrc) {
+  // Asignar la fuente del documento al iframe dentro del modal
+  document.getElementById('modalDocument').src = documentSrc;
+  
+  // Mostrar el modal
+  document.getElementById('documentModal').style.display = 'block';
+},
+
+  closeDocModal() {
+  document.getElementById('documentModal').style.display = 'none';
+  
+  // Eliminar la fuente del documento del iframe
+  document.getElementById('modalDocument').src = '';
   },
-  takePhoto() {
-    const canvas = document.getElementById('canvas');
-    const context = canvas.getContext('2d');
-    const video = document.getElementById('video');
-    context.drawImage(video, 0, 0, 640, 480);
-    const data = canvas.toDataURL('image/png');
-    this.newMessage.message = data;
-    this.sendMessage();
+
+   openImageModal(imageUrl) {
+  const modal = document.getElementById('imageModal');
+  this.selectedImage=imageUrl ;
+  modal.style.display = 'block';
+},
+
+  closeImageModal() {
+  const modal = document.getElementById('imageModal');
+  this.selectedImage = null;
+  modal.style.display = 'none';
   },
+
+    startCamera() {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+          const video = document.getElementById('video');
+          video.srcObject = stream;
+          video.play();
+        })
+        .catch((err) => {
+          console.error("Error accessing the camera", err);
+        });
+    },
+
+takePhoto() {
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
+  const video = document.getElementById('video');
+
+  // Ajustar el tamaño del lienzo para que coincida con el tamaño del video
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+
+  context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+  const data = canvas.toDataURL('image/png');
+  this.newMessage.message = data;
+  this.sendMessage();
+},
+
+openCameraModal() {
+  const modal = document.getElementById('cameraModal');
+  modal.style.display = 'block';
+  this.startCamera();
+},
+closeCameraModal() {
+  const modal = document.getElementById('cameraModal');
+  modal.style.display = 'none';
+},
 
 onFileChange(e) {
   let files = e.target.files || e.dataTransfer.files;
