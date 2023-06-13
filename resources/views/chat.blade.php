@@ -1,7 +1,7 @@
-@extends('layouts.sitio')
+@extends('layouts.appweb')
 
 @section('content')
-    <div id="app">
+    <div id="app" class="m-0">
         <chat-component></chat-component>
     </div>
 @endsection

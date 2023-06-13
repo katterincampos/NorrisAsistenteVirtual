@@ -37,7 +37,7 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('Norris') }}">Norris</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -87,7 +87,7 @@
 
         <div id="fb-root"></div>
         @yield('content')
-    <footer class="footer text-center">
+    <footer class="footer text-center fixed-bottom mt-5">
         <div class="container">
             <p>&copy; 2023 Norris. Todos los derechos reservados.</p>
             <ul class="list-inline">
