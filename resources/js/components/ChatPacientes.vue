@@ -218,6 +218,9 @@
 </style>
 
 <script>
+import { v4 as uuidv4 } from 'uuid';
+import alertify from 'alertifyjs';
+import 'alertifyjs/build/css/alertify.css';
 import io from 'socket.io-client';
 import axios from 'axios';
 import { EmojiButton } from '@joeattardi/emoji-button';
@@ -261,6 +264,7 @@ export default {
       doctorName: localStorage.getItem('doctorName'), 
       chatId: '',
       newMessage: {
+        messageId:'',
         from: localStorage.getItem('userId'),
         fromName: localStorage.getItem('userName'), 
         to: localStorage.getItem('doctorId'),
@@ -294,7 +298,7 @@ export default {
           message.message = url;
         }
         this.messages.push(message);
-        this.socket.emit('messageReceived', { messageId: message._id });
+        this.socket.emit('messageReceived', { messagesId: message.messageId });
       });
 
       this.obtenerHistorial();
@@ -302,7 +306,7 @@ export default {
       this.socket.on('chat', chat => {
         this.messages.push(chat);
       });
-      setInterval(this.obtenerHistorial, 500);
+
     });
   },
   methods: {
@@ -454,6 +458,7 @@ this.mediaRecorder.ondataavailable = async (e) => {
     },
     sendMessage() {
       if (this.newMessage.message != '') {
+        this.newMessage.messageId =uuidv4();
         this.newMessage.chatId = this.chatId;
         this.newMessage.fromName = this.userName;
         this.newMessage.toName = this.doctorName;

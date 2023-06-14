@@ -47,37 +47,30 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('Norris') }}">Inicio</a>
+                    <a class="nav-link active" href="{{ route('Norris') }}">Sintomas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/chatp">Chat</a>
+                    <a class="nav-link" href="/chatp">Recordatorios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Quienes somos</a>
+                    <a class="nav-link" href="#">Signos Vitales</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Preguntas frecuentes</a>
+                    <a class="nav-link" href="#">Estadisticas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Chat</a>
                 </li>
             </ul>
 
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">
-                        
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16" style="vertical-align: middle;">
-                            <path fill-rule="evenodd" d="..."></path>
-                            <path fill-rule="evenodd" d="..."></path>
-                        </svg>
-                        Iniciar Sesion
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}">
+                    <a class="nav-link" href="/logout">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16" style="vertical-align: middle;">
                             <path d="..."></path>
                             <path fill-rule="evenodd" d="..."></path>
                         </svg>
-                        Registrate
+                        Cerrar Sesion
                     </a>
                 </li>
             </ul>
@@ -91,14 +84,18 @@
         <div class="container">
             <p>&copy; 2023 Norris. Todos los derechos reservados.</p>
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Inicio</a></li>
-                <li class="list-inline-item"><a href="#">Asociados</a></li>
-                <li class="list-inline-item"><a href="#">Quiénes somos</a></li>
-                <li class="list-inline-item"><a href="#">Preguntas frecuentes</a></li>
+                <li class="list-inline-item"><a href="#">Sintomas</a></li>
+                <li class="list-inline-item"><a href="#">Recordatorios</a></li>
+                <li class="list-inline-item"><a href="#">Signos Vitales</a></li>
+                <li class="list-inline-item"><a href="#">Estadisticas</a></li>
+                <li class="list-inline-item"><a href="#">Chat</a></li>
+
+
             </ul>
         </div>
     </footer>
     @yield('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

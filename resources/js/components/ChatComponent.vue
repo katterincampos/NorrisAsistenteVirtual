@@ -224,7 +224,7 @@
 import io from 'socket.io-client';
 import axios from 'axios';
 import { EmojiButton } from '@joeattardi/emoji-button';
-
+import { v4 as uuidv4 } from 'uuid';
 
 // Convertir blob a base64
 function blobToBase64(blob) {
@@ -255,12 +255,14 @@ export default {
       isRecording: false,
       mediaRecorder: null,
       recordedBlobs: [],
+      
       userId: localStorage.getItem('userId'),
       userName: localStorage.getItem('userName'),
       patientId: localStorage.getItem('patientId'),
       patientName: localStorage.getItem('patientName'),      
       chatId: 'chat_' + localStorage.getItem('userId') + '_' + localStorage.getItem('patientId'),
       newMessage: {
+          messageId:'', 
         from: localStorage.getItem('userId'),
         fromName: localStorage.getItem('userName'),
         to: localStorage.getItem('patientId'),
@@ -295,12 +297,12 @@ export default {
     this.socket.on('newMessage', (message) => {
       this.messages.push(message);
       // Emitir el evento 'messageReceived' al servidor
-      this.socket.emit('messageReceived', { messageId: message._id });
+      this.socket.emit('messageReceived', { messageId: message.messageId });
     });
 
     // Manejar el evento 'messageRead'
-    this.socket.on('messageRead', (messageId) => {
-      const message = this.messages.find(msg => msg._id === messageId);
+    this.socket.on('messageRead', (messagesId) => {
+      const message = this.messages.find(msg => msg.messageId === messagesId);
       if (message) {
         message.status = 'leído';
       }
@@ -311,7 +313,6 @@ export default {
     this.socket.on('chat', chat => {
       this.messages.push(chat);
     });
-       setInterval(this.obtenerHistorial, 500);
   },
   methods: {
  openDocModal(documentSrc) {
@@ -462,6 +463,7 @@ this.mediaRecorder.ondataavailable = async (e) => {
     },
     sendMessage() {
       if (this.newMessage.message != '') {
+        this.newMessage.messageId =uuidv4();
         this.newMessage.chatId = this.chatId;
         this.newMessage.fromName = this.userName;
         this.newMessage.toName = this.doctorName;

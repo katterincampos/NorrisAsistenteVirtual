@@ -1,6 +1,18 @@
 <template>
   <div class="container text-center">
-    <a href="/logout">Cerrar Sesion</a>
+    <div class="container">
+      <!-- Contenido principal de la página -->
+      <div class="hero-section">
+    <div class="hero-image col-lg-6">
+        <img src="../../img/norris.jpg" alt="Imagen de ejemplo" class="img-fluid">
+    </div>
+    <div class="hero-text">
+        <h2>Bienvenid@s</h2>
+        <p>Hola, soy norris tu asistente virtual, mi objetivo es ayudar a personas con enfermedad obstructiva cronica</p>
+    </div>
+</div>
+
+    </div>
   </div>
 </template>
 

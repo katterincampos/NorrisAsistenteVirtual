@@ -52,8 +52,9 @@ io.on('connect', socket => {
     let db = await conectarBD(),
         collection = db.collection('chat');
     chat.status = 'enviado';
-    collection.insertOne(chat);
-
+    // Asegúrate de que estás utilizando el messageId proporcionado
+    chat._id = chat.messageId;
+    const result = await collection.insertOne(chat);
     io.to('chat_' + chat.from + '_' + chat.to).emit('chat', chat);
     io.to('chat_' + chat.to + '_' + chat.from).emit('chat', chat);
   });
@@ -67,14 +68,14 @@ io.on('connect', socket => {
 
   socket.on('messageReceived', async ({ messageId }) => {
     let db = await conectarBD(),
-        collection = db.collection('chat');
-    await collection.updateOne({ _id: messageId }, { $set: { status: 'recibido' } });
+    collection = db.collection('chat');
+await collection.updateOne({ _id: messageId }, { $set: { status: 'recibido' } });
   });
 
   socket.on('messageRead', async ({ messageId }) => {
     let db = await conectarBD(),
-        collection = db.collection('chat');
-    await collection.updateOne({ _id: messageId }, { $set: { status: 'leido' } });
+    collection = db.collection('chat');
+await collection.updateOne({ _id: messageId }, { $set: { status: 'leido' } });
   });
 });
 
