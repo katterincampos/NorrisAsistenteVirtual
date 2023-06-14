@@ -50,7 +50,7 @@
                     <a class="nav-link active" href="{{ route('Norris') }}">Sintomas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/chatp">Recordatorios</a>
+                    <a class="nav-link" href="">Recordatorios</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Signos Vitales</a>
@@ -88,7 +88,7 @@
                 <li class="list-inline-item"><a href="#">Recordatorios</a></li>
                 <li class="list-inline-item"><a href="#">Signos Vitales</a></li>
                 <li class="list-inline-item"><a href="#">Estadisticas</a></li>
-                <li class="list-inline-item"><a href="#">Chat</a></li>
+                <li class="list-inline-item"><a href="/chatp">Chat</a></li>
 
 
             </ul>
