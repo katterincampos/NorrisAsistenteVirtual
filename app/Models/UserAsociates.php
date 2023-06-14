@@ -32,6 +32,11 @@ class UserAsociates extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function patients()
+    {
+        return $this->belongsToMany(User::class, 'doctor_patient', 'doctor_id', 'patient_id');
+    }
+
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);

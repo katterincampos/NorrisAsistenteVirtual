@@ -26,13 +26,12 @@
   height: auto;
   display: block;
   margin: 0 auto;
+    }
+
   body {
 	font-family: 'Roboto', sans-serif;
 	font-size: 16px;
-	line-height: 1.4;
-	background-color: #e5e7e9;
-}
-}
+	line-height: 1.4;}
 </style>
 </head>
 
@@ -47,13 +46,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('Norris') }}">Sintomas</a>
+                    <a class="nav-link active" href="/sintomas">Sintomas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="">Recordatorios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Signos Vitales</a>
+                    <a class="nav-link" href="/signos">Signos Vitales</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Estadisticas</a>
@@ -79,9 +78,17 @@
 </nav>
 
         <div id="fb-root"></div>
-        @yield('content')
-    <footer class="footer text-center fixed-bottom mt-5">
-        <div class="container">
+        <div class="m-2" style="padding-bottom: 90px;">
+            @yield('content')
+
+        </div>
+
+
+
+        
+        
+    <footer class="footer  sticky-md-bottom  text-center ">
+    <div class="container">
             <p>&copy; 2023 Norris. Todos los derechos reservados.</p>
             <ul class="list-inline">
                 <li class="list-inline-item"><a href="#">Sintomas</a></li>
@@ -92,9 +99,12 @@
 
 
             </ul>
-        </div>
+            </div>    
     </footer>
+    
     @yield('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+              <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

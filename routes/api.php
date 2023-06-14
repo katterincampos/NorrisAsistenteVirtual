@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DoctorPatientController;
+use App\Http\Controllers\SintomasPacienteController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,3 +34,4 @@ Route::get('/session/doctorId', [SessionController::class, 'getDoctorId']);
 Route::get('/assignedDoctor/{patientId}', [DoctorPatientController::class, 'getAssignedDoctor']);
 
 Route::get('/chats', [ChatController::class, 'getChatHistory']);
+Route::middleware('auth:api')->get('/api/sintomas-historial', [SintomasPacienteController::class, 'getSintomasHistorialApi']);

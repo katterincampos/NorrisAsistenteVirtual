@@ -7,7 +7,7 @@
         <img src="../../img/norris.jpg" alt="Imagen de ejemplo" class="img-fluid">
     </div>
     <div class="hero-text">
-        <h2>Bienvenid@s</h2>
+        <p class="h2">Bienvenid@s</p>
         <p>Hola, soy norris tu asistente virtual, mi objetivo es ayudar a personas con enfermedad obstructiva cronica</p>
     </div>
 </div>

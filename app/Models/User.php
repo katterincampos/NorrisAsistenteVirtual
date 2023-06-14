@@ -33,7 +33,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
+    public function patients()
+    {
+        return $this->belongsToMany(User::class, 'doctor_patient', 'doctor_id', 'patient_id');
+    }
     /**
      * The attributes that should be cast.
      *

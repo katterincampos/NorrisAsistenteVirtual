@@ -8,6 +8,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginAsociatesController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\SintomasPacienteController;
+use App\Http\Controllers\SignosVitalesController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -66,3 +69,28 @@ Route::get('/chat',function(){
 Route::get('/chatp',function(){
     return view ('chatPacientes');
 });
+
+Route::get('/sintomas',function(){
+    return view ('registroSintomas');
+});
+
+Route::post('/sintoma', [SintomasPacienteController::class,'store'])->name('sintPaciente');
+
+
+Route::get(
+    '/signos',function(){
+        return view('registroSignos');
+    }
+);
+
+Route::get(
+    '/h',function(){
+        return view('historialSintomas');
+    }
+);
+
+Route::post('/signo', [SignosVitalesController::class,'store'])->name('singPaciente');
+
+Route::get('/historialSintomas', [SintomasPacienteController::class, 'showSintomasHistorial'])->name('historialSintomas');
+
+Route::get('/historialSignosVitales', [SignosVitalesController::class, 'showSignosVitalesHistorial'])->name('historialSignosVitales');

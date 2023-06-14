@@ -1,9 +1,11 @@
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif !important;
     font-size: 16px;
     line-height: 1.4;
     background-color: #e5e7e9;
-    padding-bottom: 60px; /* Altura de tu footer */
+    display: flex;
+    flex-direction: column;  /* Esto hace que los elementos hijos de body se apilen verticalmente */
+    min-height: 100vh;
 }
 
 .navbar-custom {
@@ -48,7 +50,9 @@ body {
 	
 
 }
-
+body > .container {
+    margin-bottom: 60px;  /* Ajusta este valor al tamaño de tu footer */
+}
 .hero-text {
 	max-width: 500px;
 }
@@ -58,9 +62,10 @@ img.img-fluid {
 }
 
 .footer {
+
+    margin-top: auto !important;
 	background-color: #1a2b4c;
 	color: white;
-
 }
 
 .footer a {
@@ -239,3 +244,153 @@ body.background {
 	height: 40vh;
 	background-color: black;;
 }
+
+
+
+.card1 {
+    width: 700px;
+    height: 1020px;
+    margin: 0 auto;
+    margin-top: 50px;
+    position: relative;
+  }
+ 
+  /*.title {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 12px;
+    background-color: rgba(18, 126, 203, 0.637);
+  }
+*/
+
+.container1 h2{
+    background-color: rgba(59, 120, 253, 0.763);
+    width:315px;
+    border-radius: 12px;
+    border: black solid;
+    
+}
+  .subtitle {
+
+background-color: rgb(9, 9, 62);
+color: white;
+font-size: 15px;
+width: 32%;
+text-align:center;
+margin: 20px;
+
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+    padding-top: 5px;
+  }
+
+  .slider-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .slider {
+    flex: 1;
+  }
+
+  .input-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .input {
+    flex: 1;
+  }
+
+  .sub1{
+color: grey;
+
+}
+
+.sub2{
+    color: grey;
+    
+    }
+    
+  .sub3{
+    color: grey;
+    
+    }
+    
+  .sub4{
+    color: grey;
+    
+    }
+    
+  .sub5{
+    color: grey;
+    
+    }
+    .in1{
+        color: black;
+        font-size: 18px;
+         
+    }
+
+    .in2{
+        color: black;
+        font-size: 18px;
+         
+    }
+
+    .in3{
+        color: black;
+        font-size: 18px;
+         
+    } 
+
+    .range1 {
+        color: black;
+        font-size: 18px;
+         
+    }
+
+    .range2 {
+        color: black;
+        font-size: 18px;
+         
+    }
+
+    .range3 {
+        color: black;
+        font-size: 18px;
+         
+    }
+
+    .range4 {
+        color: black;
+        font-size: 18px;
+         
+    }
+
+    .range5 {
+        color: black;
+        font-size: 18px;
+         
+    }
+
+    .form-container1 {
+        text-decoration: none;
+    }
+
+    .form-container1 form{
+        align-items: start;
+    }
+
+    .panelhistorialsin {
+        border-radius: 19px;
+        border: 1px solid black;;
+        cursor: pointer;
+       
+    }
