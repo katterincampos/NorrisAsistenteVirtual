@@ -52,7 +52,11 @@ class Kernel extends HttpKernel
      *
      * @var array<string, class-string|string>
      */
+ 
+    
     protected $routeMiddleware = [
+        'isAssociate' => \App\Http\Middleware\CheckIsAssociate::class,
+        'isUser' => \App\Http\Middleware\CheckIsUser::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,

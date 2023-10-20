@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SintomasPaciente;
 use App\Http\Requests\StoreSymptomRequest;
+use Illuminate\Support\Facades\Http; // Para hacer solicitudes HTTP a la API de OpenAI
+
 class SintomasPacienteController extends Controller
 {
     public function store(Request $request)
@@ -25,13 +27,39 @@ class SintomasPacienteController extends Controller
         return view('homeNorris');
     }
 
-    public function showSintomasHistorial()
+    public function showSintomasHistorial(Request $request)
     {
-        $sintomas = SintomasPaciente::where('id_usuario', auth()->user()->id)->paginate(10);
+        $from_date = $request->input('from_date');
+        $to_date = $request->input('to_date');
+    
+        $query = SintomasPaciente::query();
+    
+        if ($from_date) {
+            $query->where('created_at', '>=', $from_date);
+        }
+    
+        if ($to_date) {
+            $query->where('created_at', '<=', $to_date);
+        }
+    
+        $sintomas = $query->where('id_usuario', auth()->user()->id)->paginate(10);
+    
         return view('historialSintomas', ['sintomas' => $sintomas]);
     }
-  
-
+    
+    public function getSymptomsHistory(Request $request)
+    {
+        $userId = $request->user()->id;
+        $symptomsHistory = SintomasPaciente::where('id_usuario', $userId)->get();
+        return response()->json($symptomsHistory);
+    }
+    
+    public function analyzeAndInterpretSymptoms(Request $request)
+    {
+        $symptoms = $request->input('symptoms');
+        $responseFromOpenAI = $this->integrateWithOpenAI($symptoms);
+        return response()->json($responseFromOpenAI);
+    }
 
         
     }

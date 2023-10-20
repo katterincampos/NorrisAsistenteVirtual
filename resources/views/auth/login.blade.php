@@ -20,7 +20,7 @@
     @endif
                         <input class="mb-2"  name="username" type="text" placeholder="Nombre de usuario" required />
                         <input class="mb-2"  name="password" type="password" placeholder="Contraseña" required />
-                        <a href="">Olvidastes tu contraseña?</a>
+                        <a href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
                         <div class="btn-group">
                           <button id="googleSignUpButton" class="btn btn-dark mt-2" type="button"><i class="fa-brands fa-google fa-lg"></i></button>
                           <button id="facebookSignUpButton" class="btn btn-dark mt-2" type="button"><i class="fa-brands fa-facebook fa-lg"></i></button>

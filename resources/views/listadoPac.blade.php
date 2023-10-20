@@ -1,4 +1,4 @@
-@extends('layouts.sitio')
+@extends('layouts.appasociados')
 
 @section('content')
     <div id="app">

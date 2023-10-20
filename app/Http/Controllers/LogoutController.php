@@ -15,4 +15,11 @@ class LogoutController extends Controller
 
         return redirect('login');
     }
+    public function logoutAsociados(){
+        Session::flush();
+        
+        Auth::logout();
+
+        return redirect('loginAsociados');
+    }
 }

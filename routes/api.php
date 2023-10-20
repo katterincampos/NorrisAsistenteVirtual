@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DoctorPatientController;
 use App\Http\Controllers\SintomasPacienteController;
-
+use App\Http\Controllers\GraficosSintomasController;
+use App\Http\Controllers\GraficosSignosVitalesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,6 +33,9 @@ Route::get('/session/doctorId', [SessionController::class, 'getDoctorId']);
 
 
 Route::get('/assignedDoctor/{patientId}', [DoctorPatientController::class, 'getAssignedDoctor']);
-
 Route::get('/chats', [ChatController::class, 'getChatHistory']);
 Route::middleware('auth:api')->get('/api/sintomas-historial', [SintomasPacienteController::class, 'getSintomasHistorialApi']);
+
+Route::get('/grafico/{id_usuario}/{sintoma}', [GraficosSintomasController::class, 'mostrarGrafico']);
+
+Route::get('/graficoSignos/{id_usuario}/{signo}', [GraficosSignosVitalesController::class, 'mostrarGrafico']);

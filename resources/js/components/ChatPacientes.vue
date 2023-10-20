@@ -5,10 +5,11 @@
       <div class="col col-12">
         <div class="chat-container">
           <div class="chat-header fondo1 text-white p-3 d-flex justify-content-between align-items-center ">
-            <div>
-              <img src="../../../public/img/person-circle.svg" alt="">
-               {{userName}}
-            </div>
+<div>
+          <img v-if="doctorProfileImageUrl && doctorProfileImageUrl !== 'null'" :src="doctorProfileImageUrl" alt="Foto de perfil" style="max-width: 100px; height: 100px; border-radius: 8px;"/>
+<img v-else src="../../../public/img/person-circle.svg" alt="Imagen predeterminada"/>
+    {{doctorName}}
+</div>
 
           </div>
                  <div id="cameraModal" class="modal" tabindex="-1">
@@ -149,7 +150,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  height:510px; /* Adjust this value as needed */  
+  height:580px; /* Adjust this value as needed */  
 }
 
 .chat-header {
@@ -220,7 +221,6 @@
 <script>
 import { v4 as uuidv4 } from 'uuid';
 import alertify from 'alertifyjs';
-import 'alertifyjs/build/css/alertify.css';
 import io from 'socket.io-client';
 import axios from 'axios';
 import { EmojiButton } from '@joeattardi/emoji-button';
@@ -263,12 +263,15 @@ export default {
       doctor_Id: localStorage.getItem('doctor_id'),
       doctorName: localStorage.getItem('doctorName'), 
       chatId: '',
+              doctorProfileImageUrl: localStorage.getItem('doctorProfileImageUrl') || '../../../public/img/person-circle.svg',
+
       newMessage: {
         messageId:'',
         from: localStorage.getItem('userId'),
         fromName: localStorage.getItem('userName'), 
         to: localStorage.getItem('doctorId'),
         toName: localStorage.getItem('doctorName'), 
+
         message: '',
         status: '', 
         fecha:new Date(),
@@ -296,8 +299,12 @@ export default {
           const blob = base64ToBlob(message.message);
           const url = URL.createObjectURL(blob);
           message.message = url;
+                  alertifyjs.success('Mensaje enviado');
+
         }
         this.messages.push(message);
+                          alertifyjs.success('Mensaje enviado');
+
         this.socket.emit('messageReceived', { messagesId: message.messageId });
       });
 
@@ -305,9 +312,13 @@ export default {
 
       this.socket.on('chat', chat => {
         this.messages.push(chat);
+        alertifyjs.success('Mensaje enviado');
+                
       });
 
     });
+        setInterval(this.obtenerHistorial,500);
+
   },
   methods: {
 openDocModal(documentSrc) {
@@ -465,6 +476,8 @@ this.mediaRecorder.ondataavailable = async (e) => {
         this.messages.push({ ...this.newMessage });
         this.socket.emit('chat', this.newMessage);
         this.newMessage.message = '';
+          alertify.success('Mensaje enviado');
+
       } else {
         alert('Por favor escriba un mensaje');
       }

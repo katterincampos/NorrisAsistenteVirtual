@@ -24,10 +24,20 @@ class SignosVitalesController extends Controller
 
         return back()->with('success', 'Los signos vitales se han registrado correctamente.');
     }
-    public function showSignosVitalesHistorial()
+    public function showSignosHistorial(Request $request)
     {
-        $signosVitales = SignosVitales::where('user_id', auth()->user()->id)->paginate(10);
-    
-        return view('historialSignosVitales', ['signosVitales' => $signosVitales]);
+        $from_date = $request->input('from_date');
+        $to_date = $request->input('to_date');
+
+        if ($from_date && $to_date) {
+            $signos = SignosVitales::where('id_usuario', auth()->user()->id)
+                ->whereBetween('created_at', [$from_date, $to_date])
+                ->paginate(10);
+        } else {
+            $signos = SignosVitales::where('id_usuario', auth()->user()->id)
+                ->paginate(10);
+        }
+
+        return view('historialSignos', ['signos' => $signos]);
     }
 }

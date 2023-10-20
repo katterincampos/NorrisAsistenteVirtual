@@ -21,6 +21,7 @@ class UserAsociates extends Authenticatable
         'address',    // new field
         'city',       // new field
         'zip_code',   // new field
+        'profile_image_url',
     ];
 
     protected $hidden = [

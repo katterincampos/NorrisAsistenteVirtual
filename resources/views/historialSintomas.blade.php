@@ -5,6 +5,21 @@
 @section('content')
 <div class="container">
     <p class="h2 mt-5">Historial de Síntomas</p>
+    <form action="/historialSintomas" method="GET" class="d-flex align-items-end">
+        <div class="row">
+            <div class="col">
+                <label for="from_date" class="form-label">Desde:</label>
+                <input type="date" id="from_date" name="from_date" class="form-control">
+            </div>
+            <div class="col">
+                <label for="to_date" class="form-label">Hasta:</label>
+                <input type="date" id="to_date" name="to_date" class="form-control">
+            </div>
+            <div class="col">
+                <input type="submit" value="Filtrar" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
     <table class="table mb-5 mt-3">
         <thead>
             <tr>

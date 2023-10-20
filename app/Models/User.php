@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements CanResetPassword
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -22,7 +22,19 @@ class User extends Authenticatable
         'email',
         'username',
         'password',
-    ];
+        'fecha_nacimiento',
+        'genero',
+        'telefono',
+        'direccion',
+        'ciudad',
+        'pais',
+        'imagen_perfil',
+    ];    
+    
+    
+    
+    
+    
 
     /**
      * The attributes that should be hidden for serialization.
@@ -33,10 +45,12 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
     public function patients()
     {
         return $this->belongsToMany(User::class, 'doctor_patient', 'doctor_id', 'patient_id');
     }
+
     /**
      * The attributes that should be cast.
      *
@@ -50,5 +64,4 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
-    
 }

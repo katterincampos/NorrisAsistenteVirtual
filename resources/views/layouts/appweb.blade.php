@@ -48,17 +48,16 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="/sintomas">Sintomas</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Recordatorios</a>
-                </li>
+        
                 <li class="nav-item">
                     <a class="nav-link" href="/signos">Signos Vitales</a>
                 </li>
+                
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Estadisticas</a>
+                    <a class="nav-link" href="/chatp">Chat</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Chat</a>
+                    <a class="nav-link" href="/patient/profile">Editar Perfil</a>
                 </li>
             </ul>
 

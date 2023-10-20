@@ -6,8 +6,10 @@
         <div class="chat-container">
           <div class="chat-header fondo1 text-white p-3 d-flex justify-content-between align-items-center ">
             <div>
-              <img src="../../../public/img/person-circle.svg" alt="">
-               {{userName}}
+          <img v-if="imageUrl && imageUrl !== 'null'" :src="imageUrl" alt="Foto de perfil" style="max-width: 100px; height: 100px; border-radius: 8px;"/>
+<img v-else src="../../../public/img/person-circle.svg" alt="Imagen predeterminada"/>
+
+               {{patientName}}
             </div>
             <div>
               <button class="btn fondo1 text-white btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
@@ -39,6 +41,7 @@
     <div class="modal-content">
       <div class="modal-body">
         <img :src="selectedImage" style="width: 100%; height: auto;">
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" @click="closeImageModal">Close</button>
@@ -255,7 +258,7 @@ export default {
       isRecording: false,
       mediaRecorder: null,
       recordedBlobs: [],
-      
+      imageUrl: localStorage.getItem('imgURL'),
       userId: localStorage.getItem('userId'),
       userName: localStorage.getItem('userName'),
       patientId: localStorage.getItem('patientId'),
@@ -312,7 +315,10 @@ export default {
 
     this.socket.on('chat', chat => {
       this.messages.push(chat);
+      console.log('Mensajes actualizados:', this.messages);
     });
+
+    setInterval(this.obtenerHistorial,500);
   },
   methods: {
  openDocModal(documentSrc) {

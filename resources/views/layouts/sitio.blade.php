@@ -56,6 +56,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Preguntas frecuentes</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('blog') }}">Blog Informativo</a>
+                    </li>
                 </ul>
 
                 <ul class="navbar-nav ms-auto">
@@ -84,7 +87,7 @@
 
     <div id="fb-root"></div>
     @yield('content')
-    <footer class="footer text-center fixed-bottom mt-5">
+    <footer class="footer text-center sticky-sm-bottom-bottom">
         <div class="container">
             <p>&copy; 2023 Norris. Todos los derechos reservados.</p>
             <ul class="list-inline">

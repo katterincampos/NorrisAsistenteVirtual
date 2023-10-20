@@ -18,31 +18,48 @@
 
 <script>
 import axios from 'axios'; 
-
+import alertify from 'alertifyjs';
 export default {
   data() {
     return {
       doctorId: '',
       doctorName: '',
+      doctorProfileImageUrl: '',
     }
   },
   methods: {
-    getDoctorData() {
-      const userId = localStorage.getItem('userId');
-      axios.get(`/api/patients/${userId}/doctors`)
-        .then(response => {
-          this.doctorId = response.data[0].doctor_id;
-          this.doctorName = response.data[0].doctorName;
-          localStorage.setItem('doctor_id', this.doctorId);
-          localStorage.setItem('doctorName', this.doctorName);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }
+getDoctorData() {
+  const userId = localStorage.getItem('userId');
+  axios.get(`/api/patients/${userId}/doctors`)
+    .then(response => {
+      console.log(response.data); // Verificar la respuesta del servidor
+
+      // Acceder al primer elemento del array y luego al objeto doctor
+      const doctorData = response.data[0].doctor;
+      if (!doctorData) {
+        console.error("El objeto 'doctor' no está presente en la respuesta.");
+        return;
+      }
+
+      this.doctorId = doctorData.id;
+      this.doctorName = doctorData.name;
+      const doctorProfileImageUrl = doctorData.profile_image_url;
+
+      console.log(doctorProfileImageUrl); // Verificar el valor antes de guardarlo
+
+      localStorage.setItem('doctor_id', this.doctorId);
+      localStorage.setItem('doctorName', this.doctorName);
+      localStorage.setItem('doctorProfileImageUrl', doctorProfileImageUrl);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
   },
   mounted() {
     this.getDoctorData();
+    alertify.success("Inicio de sesion exitoso")
   }
 }
 </script>

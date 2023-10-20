@@ -12,5 +12,6 @@
 <script>
     localStorage.setItem('userId', {{ Auth::guard('web')->user()->id }});
     localStorage.setItem('userName', "{{ Auth::guard('web')->user()->name }}");
+
 </script>
 @endsection
